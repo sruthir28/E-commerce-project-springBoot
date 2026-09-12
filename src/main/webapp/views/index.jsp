@@ -1,7 +1,7 @@
 <%@page import="java.sql.*"%>
 <%@page import="java.util.*"%>
 <%@page import="java.text.*"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!doctype html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org"
