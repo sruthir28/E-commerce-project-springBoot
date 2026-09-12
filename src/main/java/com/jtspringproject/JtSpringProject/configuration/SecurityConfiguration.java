@@ -1,5 +1,7 @@
 package com.jtspringproject.JtSpringProject.configuration;
 
+import jakarta.servlet.DispatcherType;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -27,8 +29,9 @@ public class SecurityConfiguration {
 
 		@Bean
 		SecurityFilterChain adminFilterChain(HttpSecurity http) throws Exception {
-			http.antMatcher("/admin/**")
+			http.securityMatcher("/admin/**")
 					.authorizeHttpRequests(requests -> requests
+							.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
 							.requestMatchers(new AntPathRequestMatcher("/admin/login")).permitAll()
 							.requestMatchers(new AntPathRequestMatcher("/admin/**")).hasRole("ADMIN"))
 					.formLogin(login -> login
@@ -58,8 +61,9 @@ public class SecurityConfiguration {
 		@Bean
 		SecurityFilterChain userFilterChain(HttpSecurity http) throws Exception {
 			http.authorizeHttpRequests(requests -> requests
-					.antMatchers("/login", "/register", "/newuserregister").permitAll()
-					.antMatchers("/**").hasRole("USER"))
+					.dispatcherTypeMatchers(DispatcherType.FORWARD, DispatcherType.ERROR).permitAll()
+					.requestMatchers("/login", "/register", "/newuserregister").permitAll()
+					.requestMatchers("/**").hasRole("USER"))
 					.formLogin(login -> login
 							.loginPage("/login")
 							.loginProcessingUrl("/userloginvalidate")
