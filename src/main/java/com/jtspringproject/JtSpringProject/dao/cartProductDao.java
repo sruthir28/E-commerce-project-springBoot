@@ -31,7 +31,7 @@ public class cartProductDao {
 
     @Transactional
     public List<Product> getProductByCartID(Integer cart_id) {
-        String sql = "SELECT product_id FROM cart_product WHERE cart_id = :cart_id";
+        String sql = "SELECT product_id FROM CART_PRODUCT WHERE cart_id = :cart_id";
         List<Integer> productIds = this.sessionFactory.getCurrentSession()
                 .createNativeQuery(sql)
                 .setParameter("cart_id", cart_id)
@@ -41,7 +41,7 @@ public class cartProductDao {
             return Collections.emptyList();
         }
 
-        sql = "SELECT * FROM product WHERE product_id IN (:product_ids)";
+        sql = "SELECT * FROM PRODUCT WHERE product_id IN (:product_ids)";
         return this.sessionFactory.getCurrentSession()
                 .createNativeQuery(sql, Product.class)
                 .setParameterList("product_ids", productIds)
